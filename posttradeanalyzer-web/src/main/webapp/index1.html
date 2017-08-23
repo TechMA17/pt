@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel = "stylesheet" href="styles/stylesheet2.css">
+<script src = "scripts/jquery-1.10.2.min.js"></script>
+<script src = "scripts/script.js"></script>
+<title>Home Page</title>
+</head>
+<body>
+	<div>
+		<ul id="sidebar">
+		<div><img src="img/citiwh.png" id="CitiLogo"/></div>
+		  <li><a href="index1.html" class="active">Index</a></li>
+		  <li><a href="00_home.html">Home</a></li>
+		  <li><a href="01_ioc.html">IOC Hit Rate</a></li>
+		  <li><a href="02_vwap.html">VWAP Graph</a></li>
+		  <li><a href="03_commission.html">Broker Commission</a></li>
+		  <li><a href="04_clienttradecost.html">Client Trade Cost</a></li>
+		  <li><a href="05_heatmap_stock.html">Trade Volume Heat-map</a></li>
+		</ul>
+	</div>
+	
+	<div id="content">
+		<h2>Home</h2>
+		
+	
+	    <form action="rest/orderdata/select" method="POST">
+            <label>Product ID:</label>
+            <input type="text" name="id" id="postID"/>
+            <input type="submit" value="Get as JSON" id="submitID"/>
+         </form>
+	
+		<button id="btnSumtData" >Summary <img src="img/refresh.png" height="25" width="25"/></button>
+		<button id="btnPostData" >Post <img src="img/refresh.png" height="25" width="25"/></button>
+		<button id="btnGetData" >Single <img src="img/refresh.png" height="25" width="25"/></button>
+		<button id="btnGetAllOrderData" >All <img src="img/refresh.png" height="25" width="25"/></button>
+		<div id="myDIVindex">
+		</div>
+	</div>
+
+</body>
+</html>
