@@ -6,44 +6,21 @@ import java.sql.Timestamp;
 import java.math.BigInteger;
 
 
-/**
- * The persistent class for the completedorders database table.
- * 
- */
+
 @Entity
 @Table(name="completedorders")
 @NamedQuery(name="CompletedOrder.findAll", query="SELECT c FROM CompletedOrder c")
 public class CompletedOrder implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String account;
-	private long amount;
 	private String CIOrdID;
 	private long orderQty;
-	private Timestamp originalTime;
 	private long price;
 	private int side;
 	private String symbol;
-	private String timeInForce;
-	private String transactTime;
+	private Timestamp transactTime;
 
 	public CompletedOrder() {
-	}
-
-	public String getAccount() {
-		return this.account;
-	}
-
-	public void setAccount(String account) {
-		this.account = account;
-	}
-
-	public long getAmount() {
-		return this.amount;
-	}
-
-	public void setAmount(long amount) {
-		this.amount = amount;
 	}
 	
 	@Id
@@ -61,14 +38,6 @@ public class CompletedOrder implements Serializable {
 
 	public void setOrderQty(long orderQty) {
 		this.orderQty = orderQty;
-	}
-
-	public Timestamp getOriginalTime() {
-		return this.originalTime;
-	}
-
-	public void setOriginalTime(Timestamp originalTime) {
-		this.originalTime = originalTime;
 	}
 
 	public long getPrice() {
@@ -95,26 +64,17 @@ public class CompletedOrder implements Serializable {
 		this.symbol = symbol;
 	}
 
-	public String getTimeInForce() {
-		return this.timeInForce;
-	}
-
-	public void setTimeInForce(String timeInForce) {
-		this.timeInForce = timeInForce;
-	}
-
-	public String getTransactTime() {
+	public Timestamp getTransactTime() {
 		return this.transactTime;
 	}
 
-	public void setTransactTime(String transactTime) {
+	public void setTransactTime(Timestamp transactTime) {
 		this.transactTime = transactTime;
 	}
 
 	@Override
 	public String toString() {
-		return "CompletedOrder [account=" + account + ", amount=" + amount + ", CIOrdID=" + CIOrdID + ", orderQty="
-				+ orderQty + ", originalTime=" + originalTime + ", price=" + price + ", side=" + side + ", symbol="
-				+ symbol + ", timeInForce=" + timeInForce + ", transactTime=" + transactTime + "]";
+		return "CompletedOrder [CIOrdID=" + CIOrdID + ", orderQty=" + orderQty + ", price=" + price + ", side=" + side
+				+ ", symbol=" + symbol + ", transactTime=" + transactTime + "]";
 	}
 }

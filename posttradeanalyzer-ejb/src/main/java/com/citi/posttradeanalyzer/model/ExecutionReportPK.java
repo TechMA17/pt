@@ -3,6 +3,10 @@ package com.citi.posttradeanalyzer.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+/**
+ * @author Mengying
+ * The primary key class for the executionreport database table.
+ */
 
 @Embeddable
 public class ExecutionReportPK implements Serializable {

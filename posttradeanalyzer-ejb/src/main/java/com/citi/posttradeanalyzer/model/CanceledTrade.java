@@ -2,13 +2,10 @@ package com.citi.posttradeanalyzer.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.math.BigInteger;
 
 
-/**
- * The persistent class for the canceledtrades database table.
- * 
- */
 @Entity
 @Table(name="canceledtrades")
 @NamedQuery(name="CanceledTrade.findAll", query="SELECT c FROM CanceledTrade c")
@@ -16,14 +13,10 @@ public class CanceledTrade implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String CIOrdID;
-
 	private long orderQty;
-
 	private int side;
-
 	private String symbol;
-
-	private String transactTime;
+	private Timestamp transactTime;
 
 	public CanceledTrade() {
 	}
@@ -61,11 +54,11 @@ public class CanceledTrade implements Serializable {
 		this.symbol = symbol;
 	}
 
-	public String getTransactTime() {
+	public Timestamp getTransactTime() {
 		return this.transactTime;
 	}
 
-	public void setTransactTime(String transactTime) {
+	public void setTransactTime(Timestamp transactTime) {
 		this.transactTime = transactTime;
 	}
 

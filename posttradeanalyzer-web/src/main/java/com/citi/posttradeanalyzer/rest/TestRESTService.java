@@ -16,12 +16,8 @@
  */
 package com.citi.posttradeanalyzer.rest;
 
-import java.net.URLEncoder;
-import java.sql.Timestamp;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.jms.JMSException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -29,11 +25,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.citi.posttradeanalyzer.data.BizLogic;
-import com.citi.posttradeanalyzer.service.DataInsertor;
-import com.citi.posttradeanalyzer.service.Extractor;
 import com.citi.posttradeanalyzer.service.HafizUseThisClass;
-import com.citi.posttradeanalyzer.service.Receiver;
-import com.citi.posttradeanalyzer.service.Sender;
 
 /**
  * JAX-RS Example
@@ -50,64 +42,39 @@ public class TestRESTService {
     @Inject 
     HafizUseThisClass extractor;
    
-    @Inject
-    Extractor ext;
-    
-    @Inject
-    DataInsertor insertor;
-    
-    @Inject
-    Receiver r;
-    
-    @GET
-    @Path("/import")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String testImport() throws Exception {
-    	ext.importFolder();
-    	r.startListen();
-    	return "ImportTs";
-    } 
-    
-    @GET
-    @Path("/im/{path}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String testImportPath(@PathParam("path") String path) throws Exception {
-    	ext.importFolder(path);
-    	r.startListen();
-    	return "Importing "+path;
-    } 
-    
     
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String testMengying_Hafiz() {
     	// test Insertion (Hafiz)
-    	//extractor.createObjectAndInsertIntoDB();
-		//insertor.createNewOrderSingle("0808090", 100, "lmy", "4",  890, Timestamp.valueOf("2011-10-02 18:48:05.123"), "4", 0, "Apple");
-
-    	return "End of [testDBdxHafiz]";
+    	extractor.createObjectAndInsertIntoDB();
+    	return "End of [testDBHafiz]";
     }
     
     @GET
-    @Path("/{option}")
+    @Path("/{option}/{userinput}")
     @Produces(MediaType.TEXT_PLAIN)
     public String testMengying_Frontend(@PathParam("option") String option) {
     	option = option.trim().toLowerCase();
     	//ioc
     	switch(option) {
-    	case "ioc":
-    		logic.getIoc();
+    	case "ico":
+    		//
+    		
+    		
+    		
     		break;
     	case "vwamp":
     		break;
     	case "commission":
+    		System.out.println("commission is invoked");
     		logic.getCommision();
     		break;
     	case "cost":
+    		System.out.println("cost is invoked");
     		logic.getClientCost();
     		break;
     	case "heatmap":
-    		logic.getHeatMapData();
     		break;
     		
     	default:

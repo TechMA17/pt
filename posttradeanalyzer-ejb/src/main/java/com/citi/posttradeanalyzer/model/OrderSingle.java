@@ -1,16 +1,25 @@
 package com.citi.posttradeanalyzer.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+
+/**
+ * @author Mengying
+ */
 
 @Entity
 @NamedQuery(name="OrderSingle.findAll", query="SELECT o FROM OrderSingle o")
 public class OrderSingle implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 
 	private String CIOrdId;
 	private String account;
@@ -21,8 +30,8 @@ public class OrderSingle implements Serializable {
 	private int side;
 	private String symbol;
 	private String timeInForce;
-
-	private List<ExecutionReport> executionReports;
+	
+	private List<ExecutionReport> executionReports = new ArrayList<>();
 
 	public OrderSingle() {
 	}

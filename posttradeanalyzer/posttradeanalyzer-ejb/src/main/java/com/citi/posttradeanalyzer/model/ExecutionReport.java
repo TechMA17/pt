@@ -1,13 +1,16 @@
 package com.citi.posttradeanalyzer.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.math.BigInteger;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
+/**
+ * 
+ * @author Mengying
+ *
+ */
 
 
 @Entity
@@ -15,24 +18,69 @@ import javax.persistence.NamedQuery;
 public class ExecutionReport implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
+	
 	private ExecutionReportPK id;
+	private BigDecimal avgPx;
+	private long cumQty;
+	private BigDecimal lastPx;
+	private long lastShares;
+	private long leavesQty;
 	private String ordStatus;
 	private Timestamp transactTime;
-	
-	@ManyToOne
-	@JoinColumn(name="CIOrdId")
+
+
 	private OrderSingle orderSingle;
 
 	public ExecutionReport() {
 	}
-
+	
+	@EmbeddedId
 	public ExecutionReportPK getId() {
 		return this.id;
 	}
 
 	public void setId(ExecutionReportPK id) {
 		this.id = id;
+	}
+
+	public BigDecimal getAvgPx() {
+		return this.avgPx;
+	}
+
+	public void setAvgPx(BigDecimal avgPx) {
+		this.avgPx = avgPx;
+	}
+
+	public long getCumQty() {
+		return this.cumQty;
+	}
+
+	public void setCumQty(long cumQty) {
+		this.cumQty = cumQty;
+	}
+
+	public BigDecimal getLastPx() {
+		return this.lastPx;
+	}
+
+	public void setLastPx(BigDecimal lastPx) {
+		this.lastPx = lastPx;
+	}
+
+	public long getLastShares() {
+		return this.lastShares;
+	}
+
+	public void setLastShares(long lastShares) {
+		this.lastShares = lastShares;
+	}
+
+	public long getLeavesQty() {
+		return this.leavesQty;
+	}
+
+	public void setLeavesQty(long leavesQty) {
+		this.leavesQty = leavesQty;
 	}
 
 	public String getOrdStatus() {
@@ -51,6 +99,8 @@ public class ExecutionReport implements Serializable {
 		this.transactTime = transactTime;
 	}
 	
+	@ManyToOne
+	@JoinColumn(name="CIOrdId")
 	public OrderSingle getOrderSingle() {
 		return this.orderSingle;
 	}
@@ -61,7 +111,8 @@ public class ExecutionReport implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ExecutionReport [id=" + id + ", ordStatus=" + ordStatus + ", transactTime=" + transactTime
-				+ ", orderSingle=" + orderSingle + "]";
+		return "ExecutionReport [id=" + id + ", avgPx=" + avgPx + ", cumQty=" + cumQty + ", lastPx=" + lastPx
+				+ ", lastShares=" + lastShares + ", leavesQty=" + leavesQty + ", ordStatus=" + ordStatus
+				+ ", transactTime=" + transactTime + ", orderSingle=" + orderSingle + "]";
 	}
 }

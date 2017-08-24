@@ -17,10 +17,8 @@
 package com.citi.posttradeanalyzer.service;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 
 import com.citi.posttradeanalyzer.model.ExecutionReport;
 import com.citi.posttradeanalyzer.model.OrderSingle;
@@ -32,19 +30,14 @@ import com.citi.posttradeanalyzer.model.OrderSingle;
 @Stateless
 public class OrderSingleCreator {
 
-	// @Inject
-	@PersistenceContext(unitName = "primary")
+	@Inject
 	private EntityManager em;
-
+	
 	public void createNewOrderSingle(OrderSingle order) {
 		System.out.println(order);
-		try {
-			em.persist(order);
-		} catch (Exception ex) {
-    		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		}
+		em.persist(order);
 	}
-
+	
 	public void createNewExecutionReport(ExecutionReport report) {
 		System.out.println(report);
 		em.persist(report);

@@ -1,123 +1,66 @@
 package com.citi.posttradeanalyzer.data;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
+import com.citi.posttradeanalyzer.model.OrderSingle;
 
 /*
  * @author Mengying
  * 
  */
 
-@RequestScoped
+@ApplicationScoped
 public class BizLogic {
-	
+
 	@Inject
-	QueryEngine qe;
+	private EntityManager em;
 
 	public String getErrorMessage() {
 		return "invalid option";
 	}
-	
-	
-	public ArrayList<ArrayList<String>> getIoc() {
-		
-		ArrayList<ArrayList<String>> arr = new ArrayList<ArrayList<String>>();
-		ArrayList<String> innerArr = new ArrayList<>();
- 		
-		HashMap<String, String> numIocOrder = qe.getNumberOfIOCOrder();		
-		HashMap<String, String> numIocFilledOrder = qe.getNumberOfIOCFilledOrder();
-		
-		String[] iocTimes = numIocOrder.keySet().toArray(new String[numIocOrder.keySet().toArray().length]);
-		Arrays.sort(iocTimes);
-	
-		long filledCount;
-		long iocCount;
-		double hitRate;
-		for (String time : iocTimes) {
-			innerArr = new ArrayList<>();
-			if (numIocFilledOrder.containsKey(time)) {
-				 filledCount = Long.parseLong(numIocFilledOrder.get(time));
-			}  else {
-				filledCount = 0;
-			}
-			iocCount = Long.parseLong(numIocOrder.get(time));
-			hitRate = filledCount / iocCount;
-			innerArr.add(time);
-			innerArr.add(String.valueOf(hitRate));
-			arr.add(innerArr);
-		}
-		return arr;
-	}
 
-	
-	public void getVwamp(String symbol) {
-		ArrayList<ArrayList<String>> samplePrice = qe.getSamplePricePerMinute(symbol);
-		ArrayList<ArrayList<String>> vwapPrice = qe.getVwampValueEveryFiveMins(symbol);
-	}
+	public void getClientCost() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Tuple> criteria = cb.createTupleQuery();
+		Root<OrderSingle> root = criteria.from(OrderSingle.class);
 
-	
-	public ArrayList<ArrayList<String>> getCommision() {
-		
-		ArrayList<ArrayList<String>> arr = qe.getCommissionAndTime();
-		System.out.println(arr);
-		return arr;
-	}
-	
-	
-	public ArrayList<ArrayList<String>> getClientCost() {
-		ArrayList<ArrayList<String>> arr = qe.getClientCost();
-		System.out.println(arr);
-		return arr;
-	}
-	
-	
-	public HashMap<String, ArrayList<ArrayList<String>>> getHeatMapData() {
-		ArrayList<String> symbols = getSymbols();
-		HashMap<String, ArrayList<ArrayList<String>>> map = new HashMap<>();
-	
-		for (String symbol : symbols) {
-			ArrayList<ArrayList<String>> value = qe.getTradeVolumeByFiveMinInterval(symbol);
-			System.out.println(value);
-			map.put(symbol, value);
+		Join<Object, Object> reports = root.join("executionReports");
+		Predicate p1 = cb.equal(reports.get("id").get("execType"), "2");
+
+		criteria.select(cb.tuple(root.get("CIOrdId"), root.get("account"), root.get("price")));
+		criteria.where(cb.and(p1));
+
+		List<Tuple> results = em.createQuery(criteria).getResultList();
+		for (Tuple result : results) {
+			System.out.println(result.get(0) + ", " + result.get(1) + ", " + result.get(2));
 		}
-		System.out.println("****************************");
-		System.out.println(map);
-		return map;
 	}
 	
-	
-	public long getTotalNumberOfOrders() {
-		long num = qe.getTotalNumberOfOrders();
-		System.out.println(num);
-		return num;
-	}
-	
-	public long getNumberOfCompletedOrders() {
-		long num = qe.getTotalNumberOfCompletedOrders();
-		System.out.println(num);
-		return num;
-	}
-	
-	public long getNumberOfCanceledTrades() {
-		long num = qe.getTotalNumberOfCanceledTrades();
-		System.out.println(num);
-		return num;
-	}
-	
-	public double getTotalCommission() {
-		double commission = qe.getTotalCommission();
-		System.out.println(commission);
-		return commission;
-	}
-	
-	public ArrayList<String> getSymbols(){
-		ArrayList<String> symbols = qe.getSymbols();
-		System.out.println(symbols);
-		return symbols;
+	public void getCommision() {
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Tuple> criteria = cb.createTupleQuery();
+		Root<OrderSingle> root = criteria.from(OrderSingle.class);
+
+		Join<Object, Object> reports = root.join("executionReports");
+		Predicate p1 = cb.equal(reports.get("id").get("execType"), "2");
+
+		criteria.select(cb.tuple(root.get("CIOrdId"), root.get("account"), root.get("price")));
+		criteria.where(cb.and(p1));
+
+		List<Tuple> results = em.createQuery(criteria).getResultList();
+		for (Tuple result : results) {
+			System.out.println(result.get(0) + ", " + result.get(1) + ", " + result.get(2));
+		}
 	}
 }
