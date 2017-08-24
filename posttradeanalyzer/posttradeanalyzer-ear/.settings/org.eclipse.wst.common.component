@@ -104,7 +104,7 @@
         <dependent-module archiveName="jaxen.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/jaxen/jaxen/1.1.6/jaxen-1.1.6.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="jms.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/jms/jms/1.1/jms-1.1.jar">
+        <dependent-module archiveName="javax.jms-api.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/jms/javax.jms-api/2.0/javax.jms-api-2.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="activemq-core.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/activemq/activemq-core/5.7.0/activemq-core-5.7.0.jar">
